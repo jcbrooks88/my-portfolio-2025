@@ -1,41 +1,32 @@
-import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import AppError from './components/App-error';  // Assuming AppError is a custom component
-import LoadingIndicator from './components/LoadingIndicator.jsx'; // Assuming LoadingIndicator is a custom component
-
-// Lazy load pages for better performance
-const AboutMe = lazy(() => import('./pages/AboutMe'));
-const Portfolio = lazy(() => import('./pages/Portfolio'));
-const Contact = lazy(() => import('./pages/Contact'));
-const Resume = lazy(() => import('./pages/Resume'));
-
+import { useState } from "react";
+import Header from "./components/Header";
+import AboutMe from "./pages/AboutMe";
+import Portfolio from "./pages/Portfolio";
+import Contact from "./pages/Contact";
+import Resume from "./pages/Resume";
+import Footer from "./components/Footer";
+import "./App.css";
 
 function App() {
+  const [activeSection, setActiveSection] = useState("about");
+
+  const handleNavClick = (section) => {
+    setActiveSection(section);
+  };
+
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        
-        <main>
-          <AppError>
-            <Suspense fallback={<LoadingIndicator />}>
-              <Routes>
-                <Route path="/about-me" element={<AboutMe />} />
-                <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/resume" element={<Resume />} />
-              </Routes>
-            </Suspense>
-          </AppError>
-        </main>
-        
-        <Footer />
-      </div>
-    </Router>
+    <div className="app">
+      <Header activeSection={activeSection} onNavClick={handleNavClick} />
+      <main>
+        {activeSection === "about" && <AboutMe />}
+        {activeSection === "portfolio" && <Portfolio />}
+        {activeSection === "contact" && <Contact />}
+        {activeSection === "resume" && <Resume />}
+      </main>
+      <Footer />
+    </div>
   );
 }
 
 export default App;
+

@@ -1,49 +1,33 @@
-import { NavLink } from 'react-router-dom';
+import PropTypes from "prop-types"; // Import PropTypes
+import '../app.css'
 
-function Navigation() {
+const Navigation = ({ activeSection, onNavClick }) => {
+  const navItems = ["About Me", "Portfolio", "Contact", "Resume"];
+
   return (
     <nav>
       <ul className="no-bullets">
-        <li>
-          <NavLink
-            to="/aboutme"
-            className={({ isActive }) => (isActive ? 'active' : '')}
-            aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
+        {navItems.map((item) => (
+          <li
+            key={item}
+            className={activeSection === item ? "active" : ""}
+            onClick={() => onNavClick(item)}
+            style={{ cursor: 'pointer' }} // Ensure the list item looks clickable
           >
-            About Me
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/portfolio"
-            className={({ isActive }) => (isActive ? 'active' : '')}
-            aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
-          >
-            Portfolio
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/contact"
-            className={({ isActive }) => (isActive ? 'active' : '')}
-            aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
-          >
-            Contact
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/resume"
-            className={({ isActive }) => (isActive ? 'active' : '')}
-            aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
-          >
-            Resume
-          </NavLink>
-        </li>
+            {item.charAt(0).toUpperCase() + item.slice(1)}
+          </li>
+        ))}
       </ul>
     </nav>
   );
-}
+};
+
+// Add prop validation
+Navigation.propTypes = {
+  activeSection: PropTypes.string.isRequired, // Expecting a string for activeSection
+  onNavClick: PropTypes.func.isRequired, // Expecting a function for onNavClick
+};
 
 export default Navigation;
+
 
