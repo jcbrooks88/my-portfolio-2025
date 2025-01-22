@@ -40,3 +40,15 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Styling for navigation links */
+.no-bullets {
+  list-style-type: none; /* Remove bullets */
+  padding: 0;           /* Remove padding */
+  margin: 0;            /* Remove margin */
+  display: flex;        /* Use Flexbox */
+  justify-content: center; /* Center the links horizontally */
+  align-items: center;  /* Center the links vertically */
+  gap: 20px;            /* Add spacing between links (optional) */
+  height: 100%;         /* Ensure full height if needed (e.g., for vertical centering) */
+}

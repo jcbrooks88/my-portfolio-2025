@@ -1,11 +1,16 @@
-import { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import AppError from './components/App-Error';
-import { AboutMe, Portfolio, Contact, Resume, LoadingIndicator, NotFound } from './components/App-loading.jsx'
+import AppError from './components/App-error';  // Assuming AppError is a custom component
+import LoadingIndicator from './components/LoadingIndicator.jsx'; // Assuming LoadingIndicator is a custom component
 
+// Lazy load pages for better performance
+const AboutMe = lazy(() => import('./pages/AboutMe'));
+const Portfolio = lazy(() => import('./pages/Portfolio'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Resume = lazy(() => import('./pages/Resume'));
 
 
 function App() {
@@ -22,7 +27,6 @@ function App() {
                 <Route path="/portfolio" element={<Portfolio />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/resume" element={<Resume />} />
-                <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
           </AppError>
@@ -35,4 +39,3 @@ function App() {
 }
 
 export default App;
-
